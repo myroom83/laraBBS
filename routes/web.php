@@ -40,3 +40,5 @@ Route::get('email/verify', 'Auth\VerificationController@show')->name('verificati
 route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
 route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 
+
+Route::resource('users', 'UsersController', ['only' => ['show', 'edit', 'update']]);
