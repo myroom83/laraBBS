@@ -45,7 +45,7 @@ class UsersTableSeeder extends Seeder
         $user = User::find(1);
         $user->name = 'jeff';
         $user->email = 'jeff@larabbs.com';
-        $user->password = "";
+        $user->password = '$2y$10$CvAVUPDCE3ux2mWu7RfLIOqqtkreZjupgnvcYjCaWm35680T25hZe';
         $user->avatar = 'http://larabbs.test/uploads/images/avatars/201903/07/1_1551965175_8wUgzszAhw.jpg';
         $user->save();
 
