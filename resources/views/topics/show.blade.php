@@ -64,33 +64,33 @@
         </div>
       </div>
 
-      {{-- 用户回复列表 --}}
+       用户回复列表
       <div class="card topic-reply mt-4">
         <div class="card-body">
-          @include('topics._reply_box', ['topic' => $topic])
+          @includeWhen(Auth::check(), 'topics._reply_box', ['topic' => $topic])
           @include('topics._reply_list', ['replies' => $topic->replies()->with('user')->get()])
         </div>
       </div>
 
-      {{-- 用户发布的内容 --}}
+       用户发布的内容
       <div class="card ">
         <div class="card-body">
           <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link bg-transparent {{ active_class(if_query('tab', null)) }}" href="{{ route('users.show', $user->id) }}">
+              <a class="nav-link bg-transparent {{ active_class(if_query('tab', null)) }}" href="{{ route('users.show', $topic->user->id) }}">
                 Ta 的话题
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link bg-transparent {{ active_class(if_query('tab', 'replies')) }}" href="{{ route('users.show', [$user->id, 'tab' => 'replies']) }}">
+              <a class="nav-link bg-transparent {{ active_class(if_query('tab', 'replies')) }}" href="{{ route('users.show', [$topic->user->id, 'tab' => 'replies']) }}">
                 Ta 的回复
               </a>
             </li>
           </ul>
           @if (if_query('tab', 'replies'))
-            @include('users._replies', ['replies' => $user->replies()->with('topic')->recent()->paginate(5)])
+            @include('users._replies', ['replies' => $topic->user->replies()->with('topic')->recent()->paginate(5)])
           @else
-            @include('users._topics', ['topics' => $user->topics()->recent()->paginate(5)])
+            @include('users._topics', ['topics' => $topic->user->topics()->recent()->paginate(5)])
           @endif
         </div>
       </div>
