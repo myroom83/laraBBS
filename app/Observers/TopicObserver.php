@@ -2,23 +2,15 @@
 
 namespace App\Observers;
 
+use App\Jobs\TranslateSlug;
 use App\Models\Topic;
-use App\Handlers\SlugTranslateHandler;
+//use App\Handlers\SlugTranslateHandler;
 
 // creating, created, updating, updated, saving,
 // saved,  deleting, deleted, restoring, restored
 
 class TopicObserver
 {
-    public function creating(Topic $topic)
-    {
-        //
-    }
-
-    public function updating(Topic $topic)
-    {
-        //
-    }
 
     public function saving(Topic $topic)
     {
@@ -29,11 +21,23 @@ class TopicObserver
         $topic->excerpt = make_excerpt($topic->body);
 
         // 如 slug 字段无内容， 即使用翻译器 对title 进行翻译
+
+//            $topic->slug = app(SlugTranslateHandler::class)->translate($topic->title);
+//            if (trim($topic->slug) === 'edit') {
+//                $topic->slug = 'edit-slug';
+//            }
+
+
+    }
+
+    public function saved(Topic $topic)
+    {
+        // 如 slug 字段无内容， 即使用翻译器 对title 进行翻译
         if (! $topic->slug) {
-            $topic->slug = app(SlugTranslateHandler::class)->translate($topic->title);
-            if (trim($topic->slug) === 'edit') {
-                $topic->slug = 'edit-slug';
-            }
+
+            // 推送任务到队列
+            dispatch(new TranslateSlug($topic));
         }
+
     }
 }
