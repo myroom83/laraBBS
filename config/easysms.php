@@ -11,7 +11,7 @@ return [
 
         // 默认可用的发送网关
         'gateways' => [
-            'aliyun',
+            'yunpian',
         ],
     ],
     // 可用的网关配置
@@ -19,8 +19,8 @@ return [
         'errorlog' => [
             'file' => '/tmp/easy-sms.log',
         ],
-        'aliyun' => [
-            'api_key' => env('ALIYUN_API_KEY'),
+        'yunpian' => [
+            'api_key' => env('YUNPIAN_API_KEY'),
         ],
         //...
     ],

@@ -29,3 +29,4 @@ class VerificationCodesController extends Controller
         }
     }
 }
+
